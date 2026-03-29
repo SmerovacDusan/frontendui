@@ -1,6 +1,6 @@
 {
-    "name": "@smerovacdusan/package-test",
-    "version": "1.0.0",
+    "name": "@hrbolek/uoisfrontend-template",
+    "version": "0.6.2",
     "private": false,
     "publishConfig": {
         "access": "public"
