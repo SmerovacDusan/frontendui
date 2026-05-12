@@ -11,7 +11,7 @@ const DefaultContent = (props) => <MediumEditableContent {...props} />
 const MutationAsyncAction = InsertAsyncAction
 
 const permissions = {
-    oneOfRoles: ["plánovací administrátor"],
+    oneOfRoles: ["administrátor","plánovací administrátor"],
     mode: "absolute",
 }
 
