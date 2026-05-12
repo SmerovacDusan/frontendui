@@ -1,4 +1,5 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { useState, useEffect } from "react"
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -23,12 +24,78 @@ import { Input } from "../../../../_template/src/Base/FormControls/Input"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
+export const MediumEditableContent = ({ item, onSave = () => {}, onCancel = () => {},children }) => 
+    {const [formData, setFormData] = useState({
+        name: "",
+        nameEn: "",
+        description: "",
+        valid: false,
+    })
+
+    // Inicializace dat z item
+    useEffect(() => {
+        if (item) {
+            setFormData({
+                name: item.name || "",
+                nameEn: item.nameEn || "",
+                description: item.description || "",
+                valid: item.valid ?? false,
+            })
+        }
+    }, [item])
+
+    const handleChange = (e) => {
+        const { id, value, type, checked } = e.target
+        setFormData(prev => ({
+            ...prev,
+            [id]: type === "checkbox" ? checked : value
+        }))
+    }
+
+    const handleSave = () => {
+        onSave(formData)
+    }
+
+    const handleCancel = () => {
+        // Reset na původní hodnoty
+        if (item) {
+            setFormData({
+                name: item.name || "",
+                nameEn: item.nameEn || "",
+                description: item.description || "",
+                valid: item.valid ?? false,
+            })
+        }
+        onCancel()
+    }
+
     return (
-        <>           
-        {/* defaultValue={item?.name|| "Název"}  */}
-            <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
-            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
+        <>
+            <Input id="name" label="Jméno" className="form-control" value={formData.name} onChange={handleChange} />
+            <Input id="nameEn" label="Anglický název" className="form-control" value={formData.nameEn} onChange={handleChange} />
+            <Input id="description" label="Popis" className="form-control" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
+            <div className="mt-3">
+                <label className="form-check-label me-2">
+                    <input
+                        type="checkbox"
+                        id="valid"
+                        checked={formData.valid}
+                        onChange={handleChange}
+                        className="form-check-input"
+                    />
+                    {' '}Platný / Aktivní
+                </label>
+            </div>
+
+            <div className="mt-4 d-flex gap-2">
+                <button className="btn btn-primary" onClick={handleSave}>
+                    Uložit
+                </button>
+                <button className="btn btn-secondary" onClick={handleCancel}>
+                    Zrušit
+                </button>
+            </div>
+
             {children}
         </>
     )

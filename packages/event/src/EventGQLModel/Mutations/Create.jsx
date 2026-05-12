@@ -17,6 +17,14 @@ const permissions = {
 
 const defaultitem = { name: "Nový" };
 
+const makeCreateItem = (item = defaultitem) => ({
+    name: item?.name ?? defaultitem.name,
+    nameEn: item?.nameEn ?? "",
+    description: item?.description ?? "",
+    valid: item?.valid ?? false,
+    mastereventId: item?.mastereventId ?? item?.id,
+});
+
 /**
  * Wrapper nad `BaseCreateLink` (alias importu `CreateLink` z Base/Mutations/Create),
  * který je odvozený z obecných `General*` komponent.
@@ -88,8 +96,8 @@ export const CreateButton = ({
     CreateDialog: CreateDialog_=CreateDialog,
     DefaultContent:defaultContent=DefaultContent,
     readItemURI=ReadItemURI, 
-    rbacitem,
     item=defaultitem,
+    rbacitem,
     ...props
 }) => {
     return <BaseCreateButton 
@@ -98,7 +106,7 @@ export const CreateButton = ({
         CreateDialog={CreateDialog_}
         readItemURI={readItemURI}
         rbacitem={rbacitem}
-        item={item}
+        item={makeCreateItem(item)}
         mutationAsyncAction={mutationAsyncAction}
         {...permissions}
     />
@@ -152,7 +160,7 @@ export const CreateDialog = ({
         title={title}
         DefaultContent={defaultContent} 
         readItemURI={readItemURI}
-        item={item}
+        item={makeCreateItem(item)}
         // mutationAsyncAction={mutationAsyncAction}
     />
 };
@@ -190,12 +198,14 @@ export const CreateBody = ({
     mutationAsyncAction=MutationAsyncAction,
     DefaultContent:defaultContent=DefaultContent,
     readItemURI=ReadItemURI, 
+    item=defaultitem,
     ...props
 }) => {
     return <BaseCreateBody 
         {...props} 
         DefaultContent={defaultContent} 
         readItemURI={readItemURI}
+        item={makeCreateItem(item)}
         mutationAsyncAction={mutationAsyncAction}
     />
 };

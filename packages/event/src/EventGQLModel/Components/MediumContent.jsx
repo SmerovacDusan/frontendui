@@ -143,6 +143,20 @@ export const MediumContent = ({ item, children }) => {
             }
         </Attribute>
         
+        <Attribute label="RBC role">
+            {
+                item?.rbacobject?.currentUserRoles?.length > 0 ? (
+                    item.rbacobject.currentUserRoles.map((role, index) => (
+                        <div key={index}>
+                            {role.roletype?.name}
+                        </div>
+                    ))
+                ) : (
+                    "Žádná role"
+                )
+            }
+        </Attribute>
+
         <hr/>
         {item?.id}{" "}
         {item?.startdate}
