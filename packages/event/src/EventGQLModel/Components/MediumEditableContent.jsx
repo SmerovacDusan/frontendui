@@ -24,22 +24,34 @@ import { useState, useEffect } from "react"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumEditableContent = ({ item, onSave = () => {}, onCancel = () => {},children }) => 
-    {const [formData, setFormData] = useState({
+
+export const MediumEditableContent = ({ 
+    item, 
+    onChange = () => {},
+    onBlur = () => {},
+    onSave = () => {}, 
+    onCancel = () => {},
+    children 
+}) => {
+
+    const [formData, setFormData] = useState({
         name: "",
         nameEn: "",
         description: "",
-        valid: false,
+        startDate: "",
+        endDate: "",
+        valid: true,
     })
 
-    // Inicializace dat z item
     useEffect(() => {
         if (item) {
             setFormData({
                 name: item.name || "",
                 nameEn: item.nameEn || "",
                 description: item.description || "",
-                valid: item.valid ?? false,
+                startDate: item.startdate ? item.startdate.split("T")[0] : "",
+                endDate: item.enddate ? item.enddate.split("T")[0] : "",
+                valid: true,
             })
         }
     }, [item])
@@ -50,6 +62,8 @@ export const MediumEditableContent = ({ item, onSave = () => {}, onCancel = () =
             ...prev,
             [id]: type === "checkbox" ? checked : value
         }))
+        // propagate to parent (useEditAction expects onChange to receive normalized event)
+        try { onChange(e); } catch (err) { /* ignore */ }
     }
 
     const handleSave = () => {
@@ -57,13 +71,14 @@ export const MediumEditableContent = ({ item, onSave = () => {}, onCancel = () =
     }
 
     const handleCancel = () => {
-        // Reset na původní hodnoty
         if (item) {
+            // reset
             setFormData({
                 name: item.name || "",
                 nameEn: item.nameEn || "",
                 description: item.description || "",
-                valid: item.valid ?? false,
+                startDate: item.startdate ? item.startdate.split("T")[0] : "",
+                endDate: item.enddate ? item.enddate.split("T")[0] : "",
             })
         }
         onCancel()
@@ -71,30 +86,15 @@ export const MediumEditableContent = ({ item, onSave = () => {}, onCancel = () =
 
     return (
         <>
-            <Input id="name" label="Jméno" className="form-control" value={formData.name} onChange={handleChange} />
-            <Input id="nameEn" label="Anglický název" className="form-control" value={formData.nameEn} onChange={handleChange} />
-            <Input id="description" label="Popis" className="form-control" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
-            <div className="mt-3">
-                <label className="form-check-label me-2">
-                    <input
-                        type="checkbox"
-                        id="valid"
-                        checked={formData.valid}
-                        onChange={handleChange}
-                        className="form-check-input"
-                    />
-                    {' '}Platný / Aktivní
-                </label>
-            </div>
-
-            <div className="mt-4 d-flex gap-2">
-                <button className="btn btn-primary" onClick={handleSave}>
-                    Uložit
-                </button>
-                <button className="btn btn-secondary" onClick={handleCancel}>
-                    Zrušit
-                </button>
-            </div>
+            <Input id="name" label="Jméno" value={formData.name} onChange={handleChange} />
+            <Input 
+                id="description" 
+                label="Popis" 
+                value={formData.description} 
+                onChange={handleChange}
+                as="textarea" 
+                rows={3}
+            />
 
             {children}
         </>

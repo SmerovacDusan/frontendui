@@ -22,7 +22,7 @@ const makeCreateItem = (item = defaultitem) => ({
     nameEn: item?.nameEn ?? "",
     description: item?.description ?? "",
     valid: item?.valid ?? false,
-    mastereventId: item?.mastereventId ?? item?.id,
+    mastereventId: item?.mastereventId ?? undefined,
 });
 
 /**

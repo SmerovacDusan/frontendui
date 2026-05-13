@@ -143,6 +143,10 @@ export const MediumContent = ({ item, children }) => {
             }
         </Attribute>
         
+        <Attribute label="Popis">
+            {item?.description || "-"}
+        </Attribute>
+
         <Attribute label="RBC role">
             {
                 item?.rbacobject?.currentUserRoles?.length > 0 ? (
