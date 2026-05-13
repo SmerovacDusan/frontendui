@@ -1,4 +1,5 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { useState, useEffect } from "react"
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -23,12 +24,78 @@ import { Input } from "../../../../_template/src/Base/FormControls/Input"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
+
+export const MediumEditableContent = ({ 
+    item, 
+    onChange = () => {},
+    onBlur = () => {},
+    onSave = () => {}, 
+    onCancel = () => {},
+    children 
+}) => {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        nameEn: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        valid: true,
+    })
+
+    useEffect(() => {
+        if (item) {
+            setFormData({
+                name: item.name || "",
+                nameEn: item.nameEn || "",
+                description: item.description || "",
+                startDate: item.startdate ? item.startdate.split("T")[0] : "",
+                endDate: item.enddate ? item.enddate.split("T")[0] : "",
+                valid: true,
+            })
+        }
+    }, [item])
+
+    const handleChange = (e) => {
+        const { id, value, type, checked } = e.target
+        setFormData(prev => ({
+            ...prev,
+            [id]: type === "checkbox" ? checked : value
+        }))
+        // propagate to parent (useEditAction expects onChange to receive normalized event)
+        try { onChange(e); } catch (err) { /* ignore */ }
+    }
+
+    const handleSave = () => {
+        onSave(formData)
+    }
+
+    const handleCancel = () => {
+        if (item) {
+            // reset
+            setFormData({
+                name: item.name || "",
+                nameEn: item.nameEn || "",
+                description: item.description || "",
+                startDate: item.startdate ? item.startdate.split("T")[0] : "",
+                endDate: item.enddate ? item.enddate.split("T")[0] : "",
+            })
+        }
+        onCancel()
+    }
+
     return (
-        <>           
-        {/* defaultValue={item?.name|| "Název"}  */}
-            <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
-            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
+        <>
+            <Input id="name" label="Jméno" value={formData.name} onChange={handleChange} />
+            <Input 
+                id="description" 
+                label="Popis" 
+                value={formData.description} 
+                onChange={handleChange}
+                as="textarea" 
+                rows={3}
+            />
+
             {children}
         </>
     )

@@ -4,25 +4,33 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 import { reduceToFirstEntity, updateItemsFromGraphQLResult } from "../../../../dynamic/src/Store";
 
 const UpdateMutationStr = `
-mutation roleTypeUpdate(
-	$id: UUID! # null, 
-	$lastchange: DateTime! # null, 
-	$name: String # null, 
-	$nameEn: String # null
+mutation eventUpdate(
+  $id: UUID!, 
+  $lastchange: DateTime!, 
+  $name: String, 
+  $nameEn: String, 
+  $description: String, 
+  $startdate: DateTime, 
+  $enddate: DateTime
 ) {
-  roleTypeUpdate(
-	roleType: {
-	id: $id, 
-	lastchange: $lastchange, 
-	name: $name, 
-	nameEn: $nameEn}
+  eventUpdate(
+    event: {
+      id: $id, 
+      lastchange: $lastchange, 
+      name: $name, 
+      nameEn: $nameEn, 
+      description: $description, 
+      startdate: $startdate, 
+      enddate: $enddate
+    }
   ) {
-    ... on RoleTypeGQLModel { ...Large }
-    ... on RoleTypeGQLModelUpdateError { ...Error }
+      ... on EventGQLModel { ...Large }
+      ... on EventGQLModelUpdateError { ...Error }
   }
 }
 
-fragment Error on RoleTypeGQLModelUpdateError {
+
+fragment Error on EventGQLModelUpdateError {
   __typename
   Entity {
     ...Large
