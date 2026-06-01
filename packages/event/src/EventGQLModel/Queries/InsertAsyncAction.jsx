@@ -4,181 +4,54 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 
 
 const InsertMutationStr = `
-mutation eventInsert(
-  $mastereventId: UUID!, 
-  $name: String, 
-  $nameEn: String, 
-  $description: String, 
-  $startDate: DateTime, 
-  $endDate: DateTime, 
-  $id: UUID, 
-  $subevents: [EventInsertGQLModel!]
-) {
-  eventInsert(
-    event: {
-      mastereventId: $mastereventId, 
-      name: $name, 
-      nameEn: $nameEn, 
-      description: $description, 
-      startDate: $startDate, 
-      endDate: $endDate, 
-      id: $id, 
-      subevents: $subevents
-    }
-  ) {
-    ... on EventGQLModelInsertError { ...InsertError }
-    ... on EventGQLModel { ...Large }
+mutation eventInsert($mastereventId: UUID!, $name: String, $nameEn: String, $description: String, $startDate: DateTime, $endDate: DateTime, $id: UUID, $subevents: [EventInsertGQLModel!]) {
+  eventInsert(event: {mastereventId: $mastereventId, name: $name, nameEn: $nameEn, description: $description, startDate: $startDate, endDate: $endDate, id: $id, subevents: $subevents}) {
+    ... on EventGQLModel { ...Event }
+    ... on EventGQLModelInsertError { ...EventGQLModelInsertError }
   }
 }
 
-
-
-fragment InsertError on EventGQLModelInsertError {
-  __typename
-  Entity {
-    ...Event
-  }
-  msg
-  failed
-  code
-  location
-  input
-
-}
 fragment User on UserGQLModel {
-      __typename
-      id
-      studies { id }
-      invitations { id }
-      lastchange
-      created
-      createdbyId
-      changedbyId
-      rbacobjectId
-      createdby { id }
-      changedby { id }
-      rbacobject { id }
-      name
-      givenname
-      middlename
-      email
-      firstname
-      surname
-      valid
-      startdate
-      enddate
-      typeId
-      memberships { id }
-      roles { id }
-      isThisMe
-      rolesOn { id }
-      gdpr
-      fullname
-      memberOf { id }
+    __typename
+    id
+    studies { __typename }
+    lastchange
+    created
+    createdbyId
+    changedbyId
+    rbacobjectId
+    createdby { __typename }
+    changedby { __typename }
+    rbacobject { __typename }
+    name
+    givenname
+    middlename
+    email
+    firstname
+    surname
+    valid
+    startdate
+    enddate
+    typeId
+    memberships { __typename }
+    roles { __typename }
+    isThisMe
+    rolesOn { __typename }
+    gdpr
+    fullname
+    memberOf { __typename }
     }
 
 fragment RBACObject on RBACObjectGQLModel {
-      __typename
-      id
-      roles { id }
-      currentUserRoles { id }
-      # userCanWithState
-      # userCanWithoutState
+    __typename
+    id
+    roles { __typename }
+    currentUserRoles { __typename }
+    # userCanWithState
+    # userCanWithoutState
     }
 
 fragment Facility on FacilityGQLModel {
-      __typename
-      id
-      lastchange
-      created
-      createdbyId
-      changedbyId
-      rbacobjectId
-      createdby { id }
-      changedby { id }
-      rbacobject { id }
-      path
-      name
-      nameEn
-      label
-      startdate
-      enddate
-      address
-      valid
-      capacity
-      geometry
-      geolocation
-      reservations { id }
-      groupId
-      facilitytypeId
-      masterFacilityId
-      type { id }
-      masterFacility { id }
-      masterFacilities { id }
-      subFacilities { id }
-      group { id }
-    }
-
-fragment EventFacilityReservation on EventFacilityReservationGQLModel {
-      __typename
-      id
-      lastchange
-      created
-      createdbyId
-      changedbyId
-      rbacobjectId
-      createdby { id }
-      changedby { id }
-      rbacobject { id }
-      eventId
-      event { id }
-      facilityId
-      facility { id }
-      stateId
-      state { id }
-    }
-
-fragment EventType on EventTypeGQLModel {
-      __typename
-      id
-      lastchange
-      created
-      createdbyId
-      changedbyId
-      rbacobjectId
-      createdby { id }
-      changedby { id }
-      rbacobject { id }
-      path
-      name
-      nameEn
-      description
-      parentId
-      parent { id }
-      children { id }
-      events { id }
-    }
-
-fragment EventInvitation on EventInvitationGQLModel {
-      __typename
-      id
-      lastchange
-      created
-      createdbyId
-      changedbyId
-      rbacobjectId
-      createdby { id }
-      changedby { id }
-      rbacobject { id }
-      eventId
-      userId
-      stateId
-      event { id }
-      user { id }
-      state { id }
-    }
-
-fragment Event on EventGQLModel {
     __typename
     id
     lastchange
@@ -186,42 +59,145 @@ fragment Event on EventGQLModel {
     createdbyId
     changedbyId
     rbacobjectId
-    createdby {
-  ...User
-}
-    changedby {
-  ...User
-}
-    rbacobject {
-  ...RBACObject
-}
+    createdby { __typename }
+    changedby { __typename }
+    rbacobject { __typename }
+    path
+    name
+    nameEn
+    label
+    startdate
+    enddate
+    address
+    valid
+    capacity
+    geometry
+    geolocation
+    reservations { __typename }
+    groupId
+    facilitytypeId
+    masterFacilityId
+    type { __typename }
+    masterFacility { __typename }
+    masterFacilities { __typename }
+    subFacilities { __typename }
+    group { __typename }
+    }
+
+fragment EventFacilityReservation on EventFacilityReservationGQLModel {
+    __typename
+    id
+    lastchange
+    created
+    createdbyId
+    changedbyId
+    rbacobjectId
+    createdby { __typename }
+    changedby { __typename }
+    rbacobject { __typename }
+    eventId
+    event { __typename }
+    facilityId
+    facility { __typename }
+    stateId
+    state { __typename }
+    }
+
+fragment EventType on EventTypeGQLModel {
+    __typename
+    id
+    lastchange
+    created
+    createdbyId
+    changedbyId
+    rbacobjectId
+    createdby { __typename }
+    changedby { __typename }
+    rbacobject { __typename }
     path
     name
     nameEn
     description
-    startdate
-    enddate
-    duration_raw
-    valid
-    place
-    facilityId
-    facility {
+    parentId
+    parent { __typename }
+    children { __typename }
+    events { __typename }
+    }
+
+fragment EventInvitation on EventInvitationGQLModel {
+    __typename
+    id
+    lastchange
+    created
+    createdbyId
+    changedbyId
+    rbacobjectId
+    createdby { __typename }
+    changedby { __typename }
+    rbacobject { __typename }
+    eventId
+    userId
+    stateId
+    event { __typename }
+    user { __typename }
+    state { __typename }
+    }
+
+fragment Event on EventGQLModel {
+  __typename
+  id
+  lastchange
+  created
+  createdbyId
+  changedbyId
+  rbacobjectId
+  createdby {
+  ...User
+}
+  changedby {
+  ...User
+}
+  rbacobject {
+  ...RBACObject
+}
+  path
+  name
+  nameEn
+  description
+  startdate
+  enddate
+  duration_raw
+  valid
+  place
+  facilityId
+  facility {
   ...Facility
 }
-    facilityReservations {
+  facilityReservations {
   ...EventFacilityReservation
 }
-    mastereventId
-    masterevent { id }
-    subevents { id }
-    typeId
-    type {
+  mastereventId
+  subevents { __typename }
+  typeId
+  type {
   ...EventType
 }
-    userInvitations {
+  userInvitations {
   ...EventInvitation
 }
-    # duration
+  # duration
+  }
+
+fragment EventGQLModelInsertError on EventGQLModelInsertError {
+  __typename
+  Entity {
+  ...Event
+}
+  msg
+  failed
+  code
+  location
+  input
   }
 `
 
