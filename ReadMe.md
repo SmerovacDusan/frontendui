@@ -1,22 +1,16 @@
-# Změny
+# Deník
+## 13. 4.
+### Změny
+- Vytvoření aplikace app_event
+- Vytvoření balíčku pkg-event
+- Úprava Fragments.jsx
+- Úprava MediumContent.jsx pro zobrazení obsahu
 
-## 3.4.2025
+### Problémy k vyřešení
+- Zobrazení skalárních a vektorových atributů
 
-- script `createscalar.js`
-- script `createvector.js`
-- template `EmptyVectorsAttribute.jsx`
+### Objevy
+- Podmínky pro zobrazení atributů, pokud existují
 
-
-
-
-# Jak spustit konrétní app
-
-```cmd
-npm run dev -w @hrbolek/app_dynamic
-```
-
-# Jak sestavit konrétní app
-
-```cmd
-npm run build -w @hrbolek/app_dynamic
-```
+### Problémy
+- Dotazy na atributy jiných entit (např. jméno uživatele a ne pouze jeho id)
