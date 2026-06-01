@@ -8,7 +8,20 @@ import {
 } from "../../../../_template/src/Base/Mutations/Create"
 
 const DefaultContent = (props) => <MediumEditableContent {...props} />
-const MutationAsyncAction = InsertAsyncAction
+const MutationAsyncAction = (item, gqlClient) => {
+    const isParentContext = item?.__typename === "EventGQLModel";
+    const id = isParentContext ? crypto.randomUUID() : (item?.id ?? crypto.randomUUID());
+    const mastereventId = item?.mastereventId ?? (isParentContext ? item?.id : undefined);
+    if (!mastereventId) {
+        throw new Error("Event create requires mastereventId (existing parent event id)");
+    }
+    const payload = {
+        ...item,
+        id,
+        mastereventId,
+    };
+    return InsertAsyncAction(payload, gqlClient);
+}
 
 const permissions = {
     oneOfRoles: ["administrátor","plánovací administrátor"],

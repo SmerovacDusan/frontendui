@@ -15,14 +15,6 @@ import { useState, useEffect } from "react"
  * @param {React.ReactNode} [props.children=null] - Additional content to render after the serialized `template` object.
  *
  * @returns {JSX.Element} A JSX element displaying the entity's details and optional content.
- *
- * @example
- * // Example usage:
- * const templateEntity = { id: 123, name: "Sample Entity" };
- * 
- * <TemplateMediumContent template={templateEntity}>
- *   <p>Additional information about the entity.</p>
- * </TemplateMediumContent>
  */
 
 export const MediumEditableContent = ({ 
@@ -43,14 +35,56 @@ export const MediumEditableContent = ({
         valid: true,
     })
 
+    const getCurrentDateTime = () => {
+        const now = new Date()
+        const pad = (value) => String(value).padStart(2, "0")
+        return {
+            date: `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`,
+            time: `${pad(now.getHours())}:${pad(now.getMinutes())}`,
+        }
+    }
+
+    const extractDateTime = (value) => {
+        if (!value) return getCurrentDateTime()
+        const [datePart, timePart] = String(value).split("T")
+        return {
+            date: datePart || getCurrentDateTime().date,
+            time: timePart ? timePart.slice(0, 5) : getCurrentDateTime().time,
+        }
+    }
+
+    const buildIsoDateTime = (dateTime) => {
+        if (!dateTime?.date) return null
+        const hhmm = dateTime.time || "00:00"
+        return `${dateTime.date}T${hhmm}:00`
+    }
+
+    const buildPayload = (nextFormData) => ({
+        ...nextFormData,
+        startdate: buildIsoDateTime(nextFormData.startDate),
+        enddate: buildIsoDateTime(nextFormData.endDate),
+    })
+
     useEffect(() => {
         if (item) {
+            const startDateTime = extractDateTime(item.startdate)
+            const endDateTime = extractDateTime(item.enddate)
             setFormData({
                 name: item.name || "",
                 nameEn: item.nameEn || "",
                 description: item.description || "",
-                startDate: item.startdate ? item.startdate.split("T")[0] : "",
-                endDate: item.enddate ? item.enddate.split("T")[0] : "",
+                startDate: startDateTime,
+                endDate: endDateTime,
+                valid: true,
+            })
+        } else {
+            const currentDateTime = getCurrentDateTime()
+            setFormData({
+                name: "",
+                nameEn: "",
+                description: "",
+                startDate: currentDateTime,
+                endDate: currentDateTime,
                 valid: true,
             })
         }
@@ -58,44 +92,43 @@ export const MediumEditableContent = ({
 
     const handleChange = (e) => {
         const { id, value, type, checked } = e.target
-        setFormData(prev => ({
-            ...prev,
-            [id]: type === "checkbox" ? checked : value
-        }))
-        // propagate to parent (useEditAction expects onChange to receive normalized event)
+        const nextFormData = {
+            ...formData,
+            [id]: type === "checkbox" ? checked : value,
+        }
+        setFormData(nextFormData)
         try { onChange(e); } catch (err) { /* ignore */ }
-    }
 
+        // Also update full draft payload so backend vars `startdate`/`enddate` are present for update flow
+        try { onChange({ target: { value: buildPayload(nextFormData) } }); } catch (err) { /* ignore */ }
+    }
+    
     const handleSave = () => {
-        onSave(formData)
+        const payload = buildPayload(formData)
+        try { console.debug("MediumEditableContent.handleSave payload", payload) } catch (e) {}
+        onSave(payload)
     }
 
     const handleCancel = () => {
         if (item) {
-            // reset
+            const startDateTime = extractDateTime(item.startdate)
+            const endDateTime = extractDateTime(item.enddate)
             setFormData({
                 name: item.name || "",
                 nameEn: item.nameEn || "",
                 description: item.description || "",
-                startDate: item.startdate ? item.startdate.split("T")[0] : "",
-                endDate: item.enddate ? item.enddate.split("T")[0] : "",
+                startDate: startDateTime,
+                endDate: endDateTime,
+                valid: true,
             })
         }
         onCancel()
     }
 
-    return (
+    return (  
         <>
             <Input id="name" label="Jméno" value={formData.name} onChange={handleChange} />
-            <Input 
-                id="description" 
-                label="Popis" 
-                value={formData.description} 
-                onChange={handleChange}
-                as="textarea" 
-                rows={3}
-            />
-
+            <Input id="description" label="Popis" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
             {children}
         </>
     )

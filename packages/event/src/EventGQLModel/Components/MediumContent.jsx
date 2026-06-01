@@ -97,6 +97,31 @@ import { Link } from "./Link"
 import { MediumContent as MediumContent_ } from "../../../../_template/src/Base/Components/MediumContent"
 import { Attribute, formatDateTime } from "../../../../_template/src/Base/Components"
 
+const formatDateOnly = (value) => {
+    if (!value) return "-"
+
+    let date = value
+    if (!(date instanceof Date)) {
+        const text = String(value)
+        const normalized = text.includes("T") ? text : `${text}T00:00:00`
+        date = new Date(normalized)
+    }
+
+    if (Number.isNaN(date.getTime())) {
+        const datePart = String(value).split("T")[0]
+        const parts = datePart.split("-")
+        if (parts.length !== 3) return datePart || "-"
+        const [year, month, day] = parts
+        return `${day.padStart(2, "0")}.${month.padStart(2, "0")}.${year}`
+    }
+
+    return new Intl.DateTimeFormat("cs-CZ", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    }).format(date)
+}
+
 export const MediumContent = ({ item, children }) => {
     return (
         <>
@@ -106,10 +131,10 @@ export const MediumContent = ({ item, children }) => {
             </Link>
         </Attribute>
         <Attribute label="Začátek">
-            {formatDateTime(item?.startdate) || item?.id || "Error"}
+            {formatDateOnly(item?.startdate)}
         </Attribute>
         <Attribute label="Konec">
-            {formatDateTime(item?.enddate) || item?.id || "Error"}
+            {formatDateOnly(item?.enddate)}
         </Attribute>
         <hr/>
         <Attribute label="Vytvořeno uživatelem">
