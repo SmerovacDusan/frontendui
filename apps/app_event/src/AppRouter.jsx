@@ -1,5 +1,6 @@
 import {
     createBrowserRouter,
+    Navigate,
     Outlet,
     RouterProvider,
 } from "react-router-dom";
@@ -30,6 +31,14 @@ const Routes = [
         path: "/",          // root
         element: <AppLayout />,
         children: [
+            {
+                path: "/event",
+                element: (<Navigate to="/event/EventGQLModel/list/" replace />),
+            },
+            {
+                path: "/event/",
+                element: (<Navigate to="/event/EventGQLModel/list/" replace />),
+            },
             ...EventGQLModelRouterSegments,
             ...BaseRouterSegments,
             // ...GroupRouterSegments,

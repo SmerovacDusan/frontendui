@@ -216,13 +216,18 @@ export const PageCatch = ({ children }) => {
         // <div>Hello</div>
         <>
         <SimpleCardCapsule title={"types"}>
-        {types.map((t, i) => (
-            <div key={t+":" + i}>
-                {/* <button className="btn btn-outline-secondary form-control"> */}
-                <ProxyLink to={`${GenericURIRoot}/${t}/list`} >{t}</ProxyLink>
-                {/* </button> */}
-            </div>
-        ))}
+        {types.map((t, i) => {
+            const target = t === "EventGQLModel"
+                ? `/event/${t}/list/`
+                : `${GenericURIRoot}/${t}/list`;
+            return (
+                <div key={t+":" + i}>
+                    {/* <button className="btn btn-outline-secondary form-control"> */}
+                    <ProxyLink to={target} >{t}</ProxyLink>
+                    {/* </button> */}
+                </div>
+            )
+        })}
         </SimpleCardCapsule>
         <SimpleCardCapsule title="_schema">
         <pre>

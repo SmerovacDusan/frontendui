@@ -3,9 +3,11 @@ import { PageUpdateItem } from "./PageUpdateItem"
 import { PageCreateItem } from "./PageCreateItem"
 import { PageReadItem } from "./PageReadItem"
 import { PageDeleteItem } from "./PageDeleteItem"
+import { Navigate } from "react-router-dom"
 
 import { DeleteItemURI, UpdateItemURI } from "../Components"
 import { CreateURI, ReadItemURI, VectorItemsURI } from "../Components"
+import { URIRoot } from "../../uriroot"
 
 /**
  * Definice segmentů rout pro Template stránky.
@@ -37,6 +39,10 @@ import { CreateURI, ReadItemURI, VectorItemsURI } from "../Components"
  * }
  */
 export const EventGQLModelRouterSegments = [
+    {
+        path: URIRoot,
+        element: (<Navigate to={VectorItemsURI} replace />),
+    },
     {
         path: CreateURI,
         element: (<PageCreateItem />),
