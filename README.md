@@ -5,7 +5,7 @@
 - Úprava souborů pro opravu routování na /event
 
 ### Problémy k vyřešení
-- Zadání data začátku a konce uživatelem
+- Zadání data začátku a konce uživatelem (zjednodušení MediumEditableContent.jsx)
 - Změna času +2 hod
 - Filtr
 - Mizející práva plánovacího administrátora
