@@ -1,4 +1,25 @@
 # Deník
+## 1. 6.
+### Změny
+- Mutace create a update
+- Úprava souborů pro opravu routování na /event
+
+### Problémy k vyřešení
+- Zadání data začátku a konce uživatelem
+- Změna času +2 hod
+- Filtr
+- Mizející práva plánovacího administrátora
+
+## 13. 5.
+### Změny
+- Mutace update
+- Přidání role plánovacího administrátora
+- Úprava queries pro mutace
+
+### Problémy k vyřešení
+- Zprovoznit mutaci create a delete
+- Rozbité routování na /event
+
 ## 13. 4.
 ### Změny
 - Vytvoření aplikace app_event
