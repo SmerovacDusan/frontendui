@@ -10,6 +10,10 @@
 - Filtr
 - Mizející práva plánovacího administrátora
 
+## 20. 5.
+### Změny
+- Live update patch
+
 ## 13. 5.
 ### Změny
 - Mutace update
