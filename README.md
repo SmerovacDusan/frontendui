@@ -1,4 +1,15 @@
 # Deník
+## 26. 6.
+### Změny
+- Aplikace běží na portu 33001 (upraveno package.json, aby správně fungovala aplikace na npm)
+
+### Problémy k vyřešení
+- Úhlednější výpis událostí (list)
+- Přidat možnost vytvoření události na listu (vytváření nebude omezeno pouze na podudálosti)
+
+### Objevy
+- Na _uois překlep, který neumožňuje načtení CSS na portu 33001
+
 ## 1. 6.
 ### Změny
 - Mutace create a update
