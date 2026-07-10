@@ -127,8 +127,8 @@ export const MediumEditableContent = ({
 
     return (  
         <>
-            <Input id="name" label="Jméno" value={formData.name} onChange={handleChange} />
-            <Input id="description" label="Popis" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
+            <Input id="name" label="Jméno" className="form-control" value={formData.name} onChange={handleChange} />
+            <Input id="description" label="Popis" className="form-control" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
             {children}
         </>
     )

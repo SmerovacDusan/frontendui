@@ -1,4 +1,29 @@
 # Deník
+
+## 9. 7.
+### Změny
+- Přidán form-control
+- Upravení tlačítka pro vytvoření nové události na listu (zarovnání vlevo, zvětšení mezer mezi tlačítkem filtru a vypsanými událostmi, změna textu)
+
+## 30. 6.
+### Změny
+- Ve výpisu událostí následující změny:
+    - Přidáno tlačítko pro vytvoření události
+    - Výpis typu eventu
+
+- V detailu události následující změny:
+    - Začátek a konec vypisuje i čas
+    - Vypsání pozvaných uživatelů
+    - Vypsání typu eventu
+    - Oprava překlepu
+
+### K vyřešení
+- V mutacích řešit i jiné atributy (např. facility)
+
+## 29. 6.
+### Změny
+- Úhlednější výpis událostí
+
 ## 26. 6.
 ### Změny
 - Aplikace běží na portu 33001 (upraveno package.json, aby správně fungovala aplikace na npm)
