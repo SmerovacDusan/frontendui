@@ -189,10 +189,14 @@ export const MediumContent = ({ item, children }) => {
         <hr/>
         {item?.id}{" "}
         {item?.startdate}
+        
+        {/*
         <hr/>
         <pre>
             {JSON.stringify(item, null, 2)}
         </pre>
+        /*}
+        
 
         {/*
         <MediumContent_ item = {item}>

@@ -13,7 +13,13 @@ import { useState, useEffect } from "react"
  * @param {string|number} props.template.id - The unique identifier for the template entity.
  * @param {string} props.template.name - The name or label of the template entity.
  * @param {React.ReactNode} [props.children=null] - Additional content to render after the serialized `template` object.
- *
+ * @example
+ * // Example usage:
+ * const templateEntity = { id: 123, name: "Sample Entity" };
+ * 
+ * <TemplateMediumContent template={templateEntity}>
+ *   <p>Additional information about the entity.</p>
+ * </TemplateMediumContent>
  * @returns {JSX.Element} A JSX element displaying the entity's details and optional content.
  */
 
