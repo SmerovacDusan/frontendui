@@ -17,6 +17,21 @@ startdate
 enddate
 duration_raw
 mastereventId
+  facilityId
+  typeId
+
+  type {
+    __typename
+    id
+    name
+    nameEn
+  }
+
+  facility {
+  __typename
+  id
+  name
+}
   
 }
 `
@@ -33,7 +48,16 @@ fragment Medium on EventGQLModel {
 const LargeFragmentStr = `
 fragment Large on EventGQLModel {
   ...Medium
-  
+  userInvitations {
+    __typename
+    id
+    user {
+      __typename
+      id
+      fullname
+    }
+    state { __typename id name }
+  }
 }
 `
 

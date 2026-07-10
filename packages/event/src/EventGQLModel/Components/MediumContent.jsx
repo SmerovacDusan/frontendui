@@ -131,10 +131,10 @@ export const MediumContent = ({ item, children }) => {
             </Link>
         </Attribute>
         <Attribute label="Začátek">
-            {formatDateOnly(item?.startdate)}
+            {formatDateTime(item?.startdate)}
         </Attribute>
         <Attribute label="Konec">
-            {formatDateOnly(item?.enddate)}
+            {formatDateTime(item?.enddate)}
         </Attribute>
         <hr/>
         <Attribute label="Vytvořeno uživatelem">
@@ -172,7 +172,7 @@ export const MediumContent = ({ item, children }) => {
             {item?.description || "-"}
         </Attribute>
 
-        <Attribute label="RBC role">
+        <Attribute label="RBAC role">
             {
                 item?.rbacobject?.currentUserRoles?.length > 0 ? (
                     item.rbacobject.currentUserRoles.map((role, index) => (
@@ -187,16 +187,33 @@ export const MediumContent = ({ item, children }) => {
         </Attribute>
 
         <hr/>
-        {item?.id}{" "}
-        {item?.startdate}
-        
-        {/*
+        <Attribute label="Pozvaní účastníci">
+            {
+                item?.userInvitations && item.userInvitations.length > 0 ? (
+                    item.userInvitations.map((inv) => (
+                        <div key={inv.id} className="mb-1">
+                            {inv.user ? (
+                                <Link item={inv.user} LinkURI="/generic/UserGQLModel/view/">{inv.user.fullname || inv.user.id}</Link>
+                            ) : (
+                                inv.userId || "-"
+                            )}
+                            {inv.state?.name ? (<span className="text-muted"> — {inv.state.name}</span>) : null}
+                        </div>
+                    ))
+                ) : (
+                    "Žádní pozvaní"
+                )
+            }
+        </Attribute>
+
+        <Attribute label="Typ události">
+            {item?.type?.name || "-"}
+        </Attribute>
+
         <hr/>
-        <pre>
-            {JSON.stringify(item, null, 2)}
-        </pre>
-        /*}
-        
+        <Attribute label="ID události">
+            {item?.id}
+        </Attribute>
 
         {/*
         <MediumContent_ item = {item}>
