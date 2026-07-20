@@ -130,6 +130,7 @@ export const MediumContent = ({ item, children }) => {
                 {item?.id}
             </Link>
         </Attribute>
+        // pokud chci aby se zobrazovalo datum
         <Attribute label="Začátek">
             {formatDateTime(item?.startdate)}
         </Attribute>
