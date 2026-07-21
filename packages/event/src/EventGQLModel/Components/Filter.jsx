@@ -2,13 +2,11 @@ import { DateTimeFilter, Filter as BaseFilter, StringFilter, UUIDFilter } from "
 
 export const Filter = ({ id, onChange: handleChange, children }) => {
     return (
-        <BaseFilter id={id} onChange={handleChange}>
+        <BaseFilter id={id} onChange={handleChange} allowJoinSwitch={false}>
+            <DateTimeFilter id="start_date" emitUtcIso={false} />
             <UUIDFilter id="id" />
             <StringFilter id="name" />
-            <DateTimeFilter id="created" emitUtcIso={false} />
-            {/* <FloatFilter id="count" /> */}
             {children}
         </BaseFilter>
     )
 }
-

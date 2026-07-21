@@ -40,6 +40,7 @@ export const Filter = ({
     label,
     resetKey,
     join: joinProp = "_and",
+    allowJoinSwitch = true,
     onChange = () => null,
     children,
 }) => {
@@ -68,7 +69,7 @@ export const Filter = ({
             .filter(Boolean);
     }, [currentFilter]);
 
-    const showAndOr = terms.length > 1;
+    const showAndOr = allowJoinSwitch && terms.length > 1;
 
     // tady vzniká "lokální" výraz pro tento Filter
     const localExpr = useMemo(() => combine(join, terms), [join, terms]);
@@ -352,13 +353,13 @@ export const StringFilter = ({
             <Row>
                 <Col>
                     <select className="form-control" value={op} onChange={handleChangeOp}>
-                        <option value="Obsahuje">_ilike</option>
-                        <option value="Začíná na">_startswith</option>
-                        <option value="Končí na">_endswith</option>
-                        <option value="Je rovno">_eq</option>
-                        <option value="Je větší než">_gt</option>
-                        <option value="Je menší než">_lt</option>
-                        <option value="Mezi">_between</option>
+                        <option value="_ilike">Obsahuje</option>
+                        <option value="_startswith">Začíná na</option>
+                        <option value="_endswith">Končí na</option>
+                        <option value="_eq">Je rovno</option>
+                        <option value="_gt">Je větší než</option>
+                        <option value="_lt">Je menší než</option>
+                        <option value="_between">Mezi</option>
                     </select>
                 </Col>
 
@@ -402,7 +403,7 @@ function toUtcIsoFromDatetimeLocal(value) {
 export const DateTimeFilter = ({
     id,
     label,
-    initialOp = "_gte",
+    initialOp = "_ge",
     initialValue = "",       // "2025-12-23T10:30"
     emitUtcIso = true,       // true => ISO se Z
 }) => {
@@ -524,16 +525,16 @@ export const DateTimeFilter = ({
     const showBetween = op === "_between";
 
     return (
-        <SimpleCardCapsule title={label || id}>
+        <SimpleCardCapsule title={id || label}>
             <Row>
                 <Col>
                     <select className="form-control" value={op} onChange={handleChangeOp}>
-                        <option value="_eq">_eq</option>
-                        <option value="_gt">_gt</option>
-                        <option value="_gte">_gte</option>
-                        <option value="_lt">_lt</option>
-                        <option value="_lte">_lte</option>
-                        <option value="_between">_between</option>
+                        <option value="_eq">Je rovno</option>
+                        <option value="_gt">Je větší než</option>
+                        <option value="_ge">Je větší nebo rovno</option>
+                        <option value="_lt">Je menší než</option>
+                        <option value="_le">Je menší nebo rovno</option>
+                        <option value="_between">Mezi</option>
                     </select>
                 </Col>
 

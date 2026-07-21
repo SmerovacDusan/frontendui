@@ -13,7 +13,13 @@ import { useState, useEffect } from "react"
  * @param {string|number} props.template.id - The unique identifier for the template entity.
  * @param {string} props.template.name - The name or label of the template entity.
  * @param {React.ReactNode} [props.children=null] - Additional content to render after the serialized `template` object.
- *
+ * @example
+ * // Example usage:
+ * const templateEntity = { id: 123, name: "Sample Entity" };
+ * 
+ * <TemplateMediumContent template={templateEntity}>
+ *   <p>Additional information about the entity.</p>
+ * </TemplateMediumContent>
  * @returns {JSX.Element} A JSX element displaying the entity's details and optional content.
  */
 
@@ -128,7 +134,12 @@ export const MediumEditableContent = ({
     return (  
         <>
             <Input id="name" label="Jméno" className="form-control" value={formData.name} onChange={handleChange} />
+            <Input id="nameEn" label="Jméno (EN)" className="form-control" value={formData.nameEn} onChange={handleChange} />
             <Input id="description" label="Popis" className="form-control" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
+            <Input id="startDate" label="Začátek" className="form-control" value={formData.startDate.date} onChange={(e) => handleChange({ target: { id: "startDate", value: { ...formData.startDate, date: e.target.value } } })} type="date" />
+            <Input id="startTime" label="Čas začátku" className="form-control" value={formData.startDate.time} onChange={(e) => handleChange({ target: { id: "startDate", value: { ...formData.startDate, time: e.target.value } } })} type="time" />
+            <Input id="endDate" label="Konec" className="form-control" value={formData.endDate.date} onChange={(e) => handleChange({ target: { id: "endDate", value: { ...formData.endDate, date: e.target.value } } })} type="date" />
+            <Input id="endTime" label="Čas konce" className="form-control" value={formData.endDate.time} onChange={(e) => handleChange({ target: { id: "endDate", value: { ...formData.endDate, time: e.target.value } } })} type="time" />
             {children}
         </>
     )
