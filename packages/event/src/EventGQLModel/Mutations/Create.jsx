@@ -24,7 +24,7 @@ const MutationAsyncAction = (item, gqlClient) => {
 }
 
 const permissions = {
-    oneOfRoles: ["administrátor","plánovací administrátor"],
+    oneOfRoles: ["plánovací administrátor"],
     mode: "absolute",
 }
 

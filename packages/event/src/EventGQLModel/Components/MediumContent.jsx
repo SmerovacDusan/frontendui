@@ -130,7 +130,6 @@ export const MediumContent = ({ item, children }) => {
                 {item?.id}
             </Link>
         </Attribute>
-        // pokud chci aby se zobrazovalo datum
         <Attribute label="Začátek">
             {formatDateTime(item?.startdate)}
         </Attribute>
@@ -152,7 +151,7 @@ export const MediumContent = ({ item, children }) => {
         <hr/>
         <Attribute label="Změněno">
             {formatDateTime(item?.lastchange)}
-            {item?.changedby?.fullname}
+           
         </Attribute>
 
         <hr/>
