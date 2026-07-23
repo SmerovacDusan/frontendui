@@ -58,6 +58,9 @@ fragment Large on EventGQLModel {
     }
     state { __typename id name }
   }
+  subevents {
+    ...Link
+  }
 }
 `
 
