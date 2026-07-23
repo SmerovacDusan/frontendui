@@ -43,7 +43,7 @@ export const VectorAttribute = ({ attribute_name, item }) => {
 
 export const MediumCardVectors = ({ item }) => {
     return (
-        <CardCapsule item={item}>
+        <CardCapsule item={item} title="Vektorové atributy">
             {Object.entries(item).map(([attribute_name, attribute_value]) => {
                 if (Array.isArray(attribute_value)) {
                     return <VectorAttribute key={attribute_name} attribute_name={attribute_name} item={item} />
