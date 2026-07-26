@@ -1,5 +1,14 @@
 # Deník
 
+## 23. 7.
+### Změny
+- Vypsání podudálostí v detailu události
+
+## 21. 7.
+### Změny
+- Více polí u mutací (dodání začátku, konce a časů)
+- Funkční filtr
+
 ## 9. 7.
 ### Změny
 - Přidán form-control

@@ -51,4 +51,17 @@ export const Link = ({ item, LinkURI: LinkURI_ = LinkURI, action="view", childre
     // return <a>{children || item?.fullname || item?.name || item?.id || "Nevim"}</a>
 }
 
+const EventLink = ({ item, action="view", children, ...props}) => (
+    <ProxyLink to={"/event/EventGQLModel/${action}/${item?.id}"} {...props}>
+        {children || item?.fullname || item?.name || item?.id || "Nevim"}
+    </ProxyLink>
+)
+
+const UserLink = ({ item, action="view", children, ...props}) => (
+    <ProxyLink to={"/user/UserGQLModel/${action}/${item?.id}"} {...props}>
+        {children || item?.fullname || item?.name || item?.id || "Nevim"}
+    </ProxyLink>
+)
+
 registerLink('EventGQLModel', Link)
+registerLink('UserGQLModel', UserLink)
