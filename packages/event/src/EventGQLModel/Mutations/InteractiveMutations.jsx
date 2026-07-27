@@ -43,10 +43,7 @@ export const InteractiveMutations = ({ item }) => {
             <CreateButton
                 className="btn btn-outline-success"
                 rbacitem={{}}
-                item={{ mastereventId: item?.id }}
-            >
-                Vytvořit nový
-            </CreateButton>
+                item={{ mastereventId: item?.id }}>Vytvořit</CreateButton>
             <DeleteButton className="btn btn-outline-danger" item={item}>Odstranit</DeleteButton>
         </CardCapsule>
     )

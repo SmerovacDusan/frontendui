@@ -34,6 +34,8 @@ const makeCreateItem = (item = defaultitem) => ({
     name: item?.name ?? defaultitem.name,
     nameEn: item?.nameEn ?? "",
     description: item?.description ?? "",
+    startDate: item?.startDate ?? undefined,
+    endDate: item?.endDate ?? undefined,
     valid: item?.valid ?? false,
     mastereventId: item?.mastereventId ?? undefined,
 });
@@ -138,7 +140,7 @@ export const CreateButton = ({
  * a dialog je jen “formulář”. 
  *
  * @param {Object} params
- * @param {string} [params.title="Nov(ý/é)"]
+ * @param {string} [params.title="Nová událost"]
  *   Titulek dialogu.
  *
  * @param {Function} [params.mutationAsyncAction=MutationAsyncAction]
@@ -161,11 +163,13 @@ export const CreateButton = ({
  * @returns {JSX.Element} Vykreslí `BaseCreateDialog` s přednastavenými defaulty.
  */
 export const CreateDialog = ({
-    title = "Nov(ý/é)",
+    title = "Nová událost",
     // mutationAsyncAction=MutationAsyncAction,
     DefaultContent:defaultContent=DefaultContent,
     readItemURI=ReadItemURI, 
     item=defaultitem,
+    dialog = CreateDialog,
+    mutationAsyncAction:mutationAsyncAction_ = mutationAsyncAction,
     ...props
 }) => {
     return <BaseCreateDialog 
@@ -209,14 +213,14 @@ export const CreateDialog = ({
  */
 export const CreateBody = ({
     mutationAsyncAction=MutationAsyncAction,
-    DefaultContent:defaultContent=DefaultContent,
-    readItemURI=ReadItemURI, 
+    DefaultContent:defaultContent=DefaultContent, 
+    readItemURI=ReadItemURI,
     item=defaultitem,
     ...props
 }) => {
     return <BaseCreateBody 
         {...props} 
-        DefaultContent={defaultContent} 
+        DefaultContent={defaultContent}
         readItemURI={readItemURI}
         item={makeCreateItem(item)}
         mutationAsyncAction={mutationAsyncAction}

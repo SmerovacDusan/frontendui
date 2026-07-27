@@ -1,5 +1,5 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
-import { useEffect, useRef, useState } from "react"
+import { useState, useEffect } from "react"
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -13,7 +13,13 @@ import { useEffect, useRef, useState } from "react"
  * @param {string|number} props.template.id - The unique identifier for the template entity.
  * @param {string} props.template.name - The name or label of the template entity.
  * @param {React.ReactNode} [props.children=null] - Additional content to render after the serialized `template` object.
- *
+ * @example
+ * // Example usage:
+ * const templateEntity = { id: 123, name: "Sample Entity" };
+ * 
+ * <TemplateMediumContent template={templateEntity}>
+ *   <p>Additional information about the entity.</p>
+ * </TemplateMediumContent>
  * @returns {JSX.Element} A JSX element displaying the entity's details and optional content.
  */
 
@@ -25,8 +31,6 @@ export const MediumEditableContent = ({
     onCancel = () => {},
     children 
 }) => {
-
-    const didEmitInitialDatesRef = useRef(false)
 
     const [formData, setFormData] = useState({
         name: "",
@@ -56,24 +60,17 @@ export const MediumEditableContent = ({
     }
 
     const buildIsoDateTime = (dateTime) => {
-        if (!dateTime?.date) return null
-        const hhmm = dateTime.time || "00:00"
-        return `${dateTime.date}T${hhmm}:00`
+        if (!dateTime || !dateTime.date || !dateTime.time) return null
+        return `${dateTime.date}T${dateTime.time}:00`
     }
 
     const buildPayload = (nextFormData) => ({
-        // Build payload containing both snake_case (server fields) and
-        // camelCase (insert mutation variables) datetime strings so that
-        // create and update flows work regardless of naming expectations.
         ...nextFormData,
         startdate: buildIsoDateTime(nextFormData.startDate),
         enddate: buildIsoDateTime(nextFormData.endDate),
-        startDate: buildIsoDateTime(nextFormData.startDate),
-        endDate: buildIsoDateTime(nextFormData.endDate),
     })
 
     useEffect(() => {
-        didEmitInitialDatesRef.current = false
         if (item) {
             const startDateTime = extractDateTime(item.startdate)
             const endDateTime = extractDateTime(item.enddate)
@@ -98,25 +95,6 @@ export const MediumEditableContent = ({
         }
     }, [item])
 
-    useEffect(() => {
-        if (didEmitInitialDatesRef.current) return
-        const hasPersistedDates = Boolean(item?.startdate || item?.startDate || item?.enddate || item?.endDate)
-        if (hasPersistedDates) return
-
-        const currentDateTime = getCurrentDateTime()
-        const initialFormData = {
-            name: formData.name || "",
-            nameEn: formData.nameEn || "",
-            description: formData.description || "",
-            startDate: currentDateTime,
-            endDate: currentDateTime,
-            valid: true,
-        }
-
-        didEmitInitialDatesRef.current = true
-        try { onChange({ target: { value: buildPayload(initialFormData) } }); } catch (err) { /* ignore */ }
-    }, [formData, item, onChange])
-
     const handleChange = (e) => {
         const { id, value, type, checked } = e.target
         const nextFormData = {
@@ -124,8 +102,7 @@ export const MediumEditableContent = ({
             [id]: type === "checkbox" ? checked : value,
         }
         setFormData(nextFormData)
-        try { onChange(e); } catch (err) { /* ignore */ }
-
+        
         // Also update full draft payload so backend vars `startdate`/`enddate` are present for update flow
         try { onChange({ target: { value: buildPayload(nextFormData) } }); } catch (err) { /* ignore */ }
     }
@@ -152,13 +129,11 @@ export const MediumEditableContent = ({
         onCancel()
     }
 
-
-
     return (  
         <>
             <Input id="name" label="Jméno" className="form-control" value={formData.name} onChange={handleChange} />
             <Input id="nameEn" label="Jméno (EN)" className="form-control" value={formData.nameEn} onChange={handleChange} />
-            <Input id="description" label="Popis" className="form-control" value={formData.description} onChange={handleChange} as="textarea" rows={3} />
+            <Input id="description" label="Popis" className="form-control" value={formData.description} onChange={handleChange} as="textarea" rows={3}/>
             <Input id="startDate" label="Začátek" className="form-control" value={formData.startDate.date} onChange={(e) => handleChange({ target: { id: "startDate", value: { ...formData.startDate, date: e.target.value } } })} type="date" />
             <Input id="startTime" label="Čas začátku" className="form-control" value={formData.startDate.time} onChange={(e) => handleChange({ target: { id: "startDate", value: { ...formData.startDate, time: e.target.value } } })} type="time" />
             <Input id="endDate" label="Konec" className="form-control" value={formData.endDate.date} onChange={(e) => handleChange({ target: { id: "endDate", value: { ...formData.endDate, date: e.target.value } } })} type="date" />
