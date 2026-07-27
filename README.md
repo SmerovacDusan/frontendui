@@ -1,5 +1,17 @@
 # Deník
 
+## 27. 7.
+### Změny
+- Funkční filtry
+
+## 26. 7.
+### Změny
+- Vytvoření dokumentace pomocí jsdoc
+
+## 25. 7.
+### Vyřešené problémy
+- Mizející práva plánovacího administrátora - přiřazení role Zdeňce Šimečkové v systemdata.hk2026.json
+
 ## 23. 7.
 ### Změny
 - Vypsání podudálostí v detailu události
@@ -8,6 +20,9 @@
 ### Změny
 - Více polí u mutací
 - Z části funkční filtr
+
+### Problémy
+- Nastavení startdate a enddate u create (nastavení 1. 1. 1970 místo aktuálního času - nelze ani zadat vlastní)
 
 ## 9. 7.
 ### Změny
