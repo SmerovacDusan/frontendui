@@ -1,4 +1,32 @@
-import { DeleteItemURI, ListURI, MediumContent, VectorItemsURI } from "../Components";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Mutations/Delete.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Mutations/Delete.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { DeleteItemURI, ListURI, MediumContent, VectorItemsURI } from "../Components";
 import { DeleteAsyncAction } from "../Queries";
 import { 
     DeleteBody as BaseDeleteBody, 
@@ -35,7 +63,7 @@ export const DeleteLink = ({
     ...props
  }) => {
     return (
-        <BaseDeleteLink 
+        &lt;BaseDeleteLink 
             {...props} 
             uriPattern={uriPattern} 
             {...permissions}
@@ -58,7 +86,7 @@ export const DeleteLink = ({
  * @param {Function} [params.mutationAsyncAction=MutationAsyncAction]
  *   Async action (thunk) pro delete operaci (např. DeleteAsyncAction).
  *
- * @param {React.ComponentType<Object>} [params.DefaultContent=MediumContent]
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=MediumContent]
  *   Komponenta pro zobrazení mazáné entity v confirm dialogu (read-only).
  *
  * @param {string} [params.vectorItemsURI=ListURI]
@@ -82,7 +110,7 @@ export const DeleteButton = ({
     ...props 
 }) => {
     return (
-        <BaseDeleteButton 
+        &lt;BaseDeleteButton 
             {...props} 
             DefaultContent={DefaultContent_} 
             Dialog={Dialog}
@@ -104,7 +132,7 @@ export const DeleteButton = ({
  * @param {Function} [params.mutationAsyncAction=MutationAsyncAction]
  *   Async action (thunk) pro delete operaci (např. DeleteAsyncAction).
  *
- * @param {React.ComponentType<Object>} [params.DefaultContent=MediumContent]
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=MediumContent]
  *   Komponenta pro zobrazení mazáné entity (read-only).
  *
  * @param {string} [params.vectorItemsURI=ListURI]
@@ -123,7 +151,7 @@ export const DeleteDialog = ({
     ...props 
 }) => {
     return (
-        <BaseDeleteDialog 
+        &lt;BaseDeleteDialog 
             {...props} 
             DefaultContent={DefaultContent_} 
             mutationAsyncAction={mutationAsyncAction}
@@ -143,7 +171,7 @@ export const DeleteDialog = ({
  * @param {Function} [params.mutationAsyncAction=MutationAsyncAction]
  *   Async action (thunk) pro delete operaci (např. DeleteAsyncAction).
  *
- * @param {React.ComponentType<Object>} [params.DefaultContent=MediumContent]
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=MediumContent]
  *   Komponenta pro zobrazení mazáné entity (read-only).
  *
  * @param {string} [params.vectorItemsURI=ListURI]
@@ -162,7 +190,7 @@ export const DeleteBody = ({
     ...props
 }) => {
     return (
-        <BaseDeleteBody 
+        &lt;BaseDeleteBody 
             {...props} 
             DefaultContent={DefaultContent_} 
             mutationAsyncAction={mutationAsyncAction}
@@ -171,3 +199,26 @@ export const DeleteBody = ({
         />
     )
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#EventGQLModelRouterSegments">EventGQLModelRouterSegments</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Jul 26 2026 21:20:55 GMT+0200 (středoevropský letní čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

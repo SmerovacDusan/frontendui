@@ -60,9 +60,8 @@ export const MediumEditableContent = ({
     }
 
     const buildIsoDateTime = (dateTime) => {
-        if (!dateTime?.date) return null
-        const hhmm = dateTime.time || "00:00"
-        return `${dateTime.date}T${hhmm}:00`
+        if (!dateTime || !dateTime.date || !dateTime.time) return null
+        return `${dateTime.date}T${dateTime.time}:00`
     }
 
     const buildPayload = (nextFormData) => ({
@@ -103,8 +102,7 @@ export const MediumEditableContent = ({
             [id]: type === "checkbox" ? checked : value,
         }
         setFormData(nextFormData)
-        try { onChange(e); } catch (err) { /* ignore */ }
-
+        
         // Also update full draft payload so backend vars `startdate`/`enddate` are present for update flow
         try { onChange({ target: { value: buildPayload(nextFormData) } }); } catch (err) { /* ignore */ }
     }

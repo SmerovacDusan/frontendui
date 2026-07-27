@@ -1,4 +1,32 @@
-import { CreateURI, MediumEditableContent, ReadItemURI } from "../Components"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Mutations/Create.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Mutations/Create.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { CreateURI, MediumEditableContent, ReadItemURI } from "../Components"
 import { InsertAsyncAction } from "../Queries"
 import { 
     CreateBody as BaseCreateBody, 
@@ -7,21 +35,8 @@ import {
     CreateLink  as BaseCreateLink
 } from "../../../../_template/src/Base/Mutations/Create"
 
-const DefaultContent = (props) => <MediumEditableContent {...props} />
-const MutationAsyncAction = (item, gqlClient) => {
-    const isParentContext = item?.__typename === "EventGQLModel";
-    const id = isParentContext ? crypto.randomUUID() : (item?.id ?? crypto.randomUUID());
-    const mastereventId = item?.mastereventId ?? (isParentContext ? item?.id : undefined);
-    if (!mastereventId) {
-        throw new Error("Event create requires mastereventId (existing parent event id)");
-    }
-    const payload = {
-        ...item,
-        id,
-        mastereventId,
-    };
-    return InsertAsyncAction(payload, gqlClient);
-}
+const DefaultContent = (props) => &lt;MediumEditableContent {...props} />
+const MutationAsyncAction = InsertAsyncAction
 
 const permissions = {
     oneOfRoles: ["plánovací administrátor"],
@@ -34,8 +49,8 @@ const makeCreateItem = (item = defaultitem) => ({
     name: item?.name ?? defaultitem.name,
     nameEn: item?.nameEn ?? "",
     description: item?.description ?? "",
-    startDate: item?.startDate ?? undefined,
-    endDate: item?.endDate ?? undefined,
+    startdate: item?.startdate ?? "",
+    enddate: item?.enddate ?? "",
     valid: item?.valid ?? false,
     mastereventId: item?.mastereventId ?? undefined,
 });
@@ -65,7 +80,7 @@ export const CreateLink = ({
     uriPattern=CreateURI,
     ...props
 }) => (
-    <BaseCreateLink {...props} uriPattern={uriPattern} {...permissions} />
+    &lt;BaseCreateLink {...props} uriPattern={uriPattern} {...permissions} />
 );
 
 /**
@@ -85,10 +100,10 @@ export const CreateLink = ({
  * @param {Function} [params.mutationAsyncAction=MutationAsyncAction]
  *   Async action (thunk) pro vytvoření entity (např. InsertAsyncAction). Používá ho Base/General logika.
  *
- * @param {React.ComponentType<Object>} [params.CreateDialog=CreateDialog]
+ * @param {React.ComponentType&lt;Object>} [params.CreateDialog=CreateDialog]
  *   Komponenta dialogu použitá pro vytvoření (renderuje formulář a volá `onOk(draft)` / `onCancel()`).
  *
- * @param {React.ComponentType<Object>} [params.DefaultContent=DefaultContent]
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=DefaultContent]
  *   Komponenta, která vykreslí editable obsah formuláře (typicky MediumEditableContent).
  *
  * @param {string} [params.readItemURI=ReadItemURI]
@@ -115,7 +130,7 @@ export const CreateButton = ({
     rbacitem,
     ...props
 }) => {
-    return <BaseCreateButton 
+    return &lt;BaseCreateButton 
         {...props}
         DefaultContent={defaultContent} 
         CreateDialog={CreateDialog_}
@@ -147,7 +162,7 @@ export const CreateButton = ({
  *   Async action (thunk) pro vytvoření entity. Použije se pouze pokud ho `BaseCreateDialog` skutečně volá
  *   (záleží na Base/General implementaci).
  *
- * @param {React.ComponentType<Object>} [params.DefaultContent=DefaultContent]
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=DefaultContent]
  *   Komponenta, která vykreslí editable obsah formuláře (typicky MediumEditableContent).
  *
  * @param {string} [params.readItemURI=ReadItemURI]
@@ -168,11 +183,9 @@ export const CreateDialog = ({
     DefaultContent:defaultContent=DefaultContent,
     readItemURI=ReadItemURI, 
     item=defaultitem,
-    dialog = CreateDialog,
-    mutationAsyncAction:mutationAsyncAction_ = mutationAsyncAction,
     ...props
 }) => {
-    return <BaseCreateDialog 
+    return &lt;BaseCreateDialog 
         {...props} 
         title={title}
         DefaultContent={defaultContent} 
@@ -193,13 +206,13 @@ export const CreateDialog = ({
  *
  * Wrapper pouze nastavuje defaulty a přeposílá props do `BaseCreateBody`.
  * 
- * Vizualizuje <DefaultContent />, sbira zmeny a umoznuje volani backendu pro ulozeni dat
+ * Vizualizuje &lt;DefaultContent />, sbira zmeny a umoznuje volani backendu pro ulozeni dat
  *
  * @param {Object} params
  * @param {Function} [params.mutationAsyncAction=MutationAsyncAction]
  *   Async action (thunk) pro vytvoření entity (např. InsertAsyncAction). Používá ho Base/General logika.
  *
- * @param {React.ComponentType<Object>} [params.DefaultContent=DefaultContent]
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=DefaultContent]
  *   Komponenta, která vykreslí editable obsah formuláře (typicky MediumEditableContent).
  *
  * @param {string} [params.readItemURI=ReadItemURI]
@@ -213,17 +226,39 @@ export const CreateDialog = ({
  */
 export const CreateBody = ({
     mutationAsyncAction=MutationAsyncAction,
-    DefaultContent:defaultContent=DefaultContent, 
-    readItemURI=ReadItemURI,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
     item=defaultitem,
     ...props
 }) => {
-    return <BaseCreateBody 
+    return &lt;BaseCreateBody 
         {...props} 
-        DefaultContent={defaultContent}
+        DefaultContent={defaultContent} 
         readItemURI={readItemURI}
-        item={makeCreateItem(item)}
+        item={item}
         mutationAsyncAction={mutationAsyncAction}
     />
 };
+</code></pre>
+        </article>
+    </section>
 
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#EventGQLModelRouterSegments">EventGQLModelRouterSegments</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Jul 26 2026 21:20:55 GMT+0200 (středoevropský letní čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

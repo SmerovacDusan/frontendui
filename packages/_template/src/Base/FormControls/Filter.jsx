@@ -349,7 +349,7 @@ export const StringFilter = ({
     const showBetween = op === "_between";
 
     return (
-        <SimpleCardCapsule title={label || id}>
+        <SimpleCardCapsule title={id || label}>
             <Row>
                 <Col>
                     <select className="form-control" value={op} onChange={handleChangeOp}>
@@ -523,7 +523,7 @@ export const DateTimeFilter = ({
     );
 
     const showBetween = op === "_between";
-
+//tohle přestalo 
     return (
         <SimpleCardCapsule title={id || label}>
             <Row>
@@ -537,7 +537,7 @@ export const DateTimeFilter = ({
                         <option value="_between">Mezi</option>
                     </select>
                 </Col>
-
+                
                 {!showBetween ? (
                     <Col>
                         <Input
@@ -698,16 +698,16 @@ export const FloatFilter = ({
     const showBetween = op === "_between";
 
     return (
-        <SimpleCardCapsule title={label || id}>
+        <SimpleCardCapsule title={id || label}>
             <Row>
                 <Col>
                     <select className="form-control" value={op} onChange={handleChangeOp}>
-                        <option value="_eq">_eq</option>
-                        <option value="_gt">_gt</option>
-                        <option value="_gte">_gte</option>
-                        <option value="_lt">_lt</option>
-                        <option value="_lte">_lte</option>
-                        <option value="_between">_between</option>
+                        <option value="_eq">Je rovno</option>
+                        <option value="_gt">Je větší než</option>
+                        <option value="_gte">Je větší nebo rovno</option>
+                        <option value="_lt">Je menší než</option>
+                        <option value="_lte">Je menší nebo rovno</option>
+                        <option value="_between">Je mezi</option>
                     </select>
                 </Col>
 

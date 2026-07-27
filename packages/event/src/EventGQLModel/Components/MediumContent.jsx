@@ -130,7 +130,6 @@ export const MediumContent = ({ item, children }) => {
                 {item?.id}
             </Link>
         </Attribute>
-        // pokud chci aby se zobrazovalo datum
         <Attribute label="Začátek">
             {formatDateTime(item?.startdate)}
         </Attribute>
@@ -141,8 +140,8 @@ export const MediumContent = ({ item, children }) => {
         <Attribute label="Vytvořeno uživatelem">
             {
                 item?.createdbyId ? (
-                    <Link item={{id : item.createdbyId}} LinkURI="/generic/UserGQLModel/view/">
-                        {item.createdbyId}
+                    <Link item={{id : item.createdbyId}} LinkURI="/user/UserGQLModel/view/">
+                        {item.createdby?.fullname}
                     </Link>
                 ) : (
                     "-"
@@ -152,7 +151,17 @@ export const MediumContent = ({ item, children }) => {
         <hr/>
         <Attribute label="Změněno">
             {formatDateTime(item?.lastchange)}
-            {item?.changedby?.fullname}
+        </Attribute>
+        <Attribute label="uživatelem">
+            {
+                item?.createdbyId ? (
+                        <Link item={{id : item.changedbyId}} LinkURI="/user/UserGQLModel/view/">
+                            {item.changedby?.fullname}
+                        </Link>
+                    ) : (
+                        "-"
+                    )
+            }
         </Attribute>
 
         <hr/>
@@ -177,7 +186,7 @@ export const MediumContent = ({ item, children }) => {
             {
                 item?.rbacobject?.currentUserRoles?.length > 0 ? (
                     item.rbacobject.currentUserRoles.map((role, index) => (
-                        <div key={index}>
+                        <div key={role.id || index} className="mb-1">
                             {role.roletype?.name}
                         </div>
                     ))

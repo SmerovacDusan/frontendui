@@ -11,12 +11,12 @@ fragment Link on EventGQLModel {
   rbacobjectId
    
   name
-nameEn
-description
-startdate
-enddate
-duration_raw
-mastereventId
+  nameEn
+  description
+  startdate
+  enddate
+  duration_raw
+  mastereventId
   facilityId
   typeId
 
@@ -31,8 +31,34 @@ mastereventId
   __typename
   id
   name
-}
+  }
   
+  createdby {
+    __typename
+    id
+    fullname
+  }
+
+  changedby {
+    __typename
+    id
+    fullname
+  }
+
+  facilityReservations {
+    __typename
+    id
+  }
+
+  rbacobject {
+    __typename
+    id
+  }
+
+  userInvitations {
+    __typename
+    id
+  }
 }
 `
 
@@ -117,6 +143,7 @@ fragment RBRoles on RBACObjectGQLModel {
     }
   }
 }`
+
 
 export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
 export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
