@@ -140,7 +140,7 @@ export const MediumContent = ({ item, children }) => {
         <Attribute label="Vytvořeno uživatelem">
             {
                 item?.createdbyId ? (
-                    <Link item={{id : item.createdbyId}} LinkURI="/user/UserGQLModel/view/">
+                    <Link item={{id : item.createdbyId}} LinkURI="/ug/UserGQLModel/view/">
                         {item.createdby?.fullname}
                     </Link>
                 ) : (
@@ -155,7 +155,7 @@ export const MediumContent = ({ item, children }) => {
         <Attribute label="uživatelem">
             {
                 item?.createdbyId ? (
-                        <Link item={{id : item.changedbyId}} LinkURI="/user/UserGQLModel/view/">
+                        <Link item={{id : item.changedbyId}} LinkURI="/ug/UserGQLModel/view/">
                             {item.changedby?.fullname}
                         </Link>
                     ) : (
@@ -203,7 +203,7 @@ export const MediumContent = ({ item, children }) => {
                     item.userInvitations.map((inv) => (
                         <div key={inv.id} className="mb-1">
                             {inv.user ? (
-                                <Link item={inv.user} LinkURI="/generic/UserGQLModel/view/">{inv.user.fullname || inv.user.id}</Link>
+                                <Link item={inv.user} LinkURI="/ug/UserGQLModel/view/">{inv.user.fullname || inv.user.id}</Link>
                             ) : (
                                 inv.userId || "-"
                             )}

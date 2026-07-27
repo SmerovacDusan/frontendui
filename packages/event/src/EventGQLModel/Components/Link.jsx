@@ -58,7 +58,7 @@ const EventLink = ({ item, action="view", children, ...props}) => (
 )
 
 const UserLink = ({ item, action="view", children, ...props}) => (
-    <ProxyLink to={"/user/UserGQLModel/${action}/${item?.id}"} {...props}>
+    <ProxyLink to={"/ug/UserGQLModel/${action}/${item?.id}"} {...props}>
         {children || item?.fullname || item?.name || item?.id || "Nevim"}
     </ProxyLink>
 )
